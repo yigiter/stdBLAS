@@ -43,6 +43,14 @@
 #ifndef LINALG_INCLUDE_EXPERIMENTAL___P1673_BITS_MACROS_HPP_
 #define LINALG_INCLUDE_EXPERIMENTAL___P1673_BITS_MACROS_HPP_
 
+#if MDSPAN_USE_BRACKET_OPERATOR
+#define _PB1(x) [x]
+#define _PB2(x,y) [x,y]
+#else
+#define _PB1
+#define _PB2
+#endif
+
 #define P1673_MATRIX_EXTENTS_TEMPLATE_PARAMETERS( MATRIX_NAME ) \
   class SizeType_ ## MATRIX_NAME , \
   ::std::size_t numRows_ ## MATRIX_NAME , \

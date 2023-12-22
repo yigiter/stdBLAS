@@ -87,7 +87,7 @@ Scalar vector_abs_sum(
   const SizeType numElt = v.extent(0);
   for (SizeType i = 0; i < numElt; ++i) {
     using std::abs;
-    init += abs(v(i));
+    init += abs(v _PB1(i));
   }
   return init;
 }

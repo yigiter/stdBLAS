@@ -85,8 +85,8 @@ SizeType idx_abs_max_default_impl(
   SizeType maxInd = 0;
   magnitude_type maxVal = abs(v(0));
   for (SizeType i = 1; i < v.extent(0); ++i) {
-    if (maxVal < abs(v(i))) {
-      maxVal = abs(v(i));
+    if (maxVal < abs(v _PB1(i))) {
+      maxVal = abs(v _PB1(i));
       maxInd = i;
     }
   }

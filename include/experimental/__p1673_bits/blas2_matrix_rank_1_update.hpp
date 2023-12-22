@@ -140,7 +140,7 @@ void matrix_rank_1_update(
 
   for (size_type i = 0; i < A.extent(0); ++i) {
     for (size_type j = 0; j < A.extent(1); ++j) {
-      A(i,j) += x(i) * y(j);
+      A _PB2(i,j) += x _PB1(i) * y _PB1(j);
     }
   }
 }
@@ -270,14 +270,14 @@ void symmetric_matrix_rank_1_update(
   if constexpr (std::is_same_v<Triangle, lower_triangle_t>) {
     for (size_type j = 0; j < A.extent(1); ++j) {
       for (size_type i = j; i < A.extent(0); ++i) {
-        A(i,j) += x(i) * x(j);
+        A _PB2(i,j) += x _PB1(i) * x _PB1(j);
       }
     }
   }
   else {
     for (size_type j = 0; j < A.extent(1); ++j) {
       for (size_type i = 0; i <= j; ++i) {
-        A(i,j) += x(i) * x(j);
+        A _PB2(i,j) += x _PB1(i) * x _PB1(j);
       }
     }
   }
@@ -356,14 +356,14 @@ void hermitian_matrix_rank_1_update(
   if constexpr (std::is_same_v<Triangle, lower_triangle_t>) {
     for (size_type j = 0; j < A.extent(1); ++j) {
       for (size_type i = j; i < A.extent(0); ++i) {
-        A(i,j) += x(i) * impl::conj_if_needed(x(j));
+        A _PB2(i,j) += x _PB1(i) * impl::conj_if_needed(x _PB1(j));
       }
     }
   }
   else {
     for (size_type j = 0; j < A.extent(1); ++j) {
       for (size_type i = 0; i <= j; ++i) {
-        A(i,j) += x(i) * impl::conj_if_needed(x(j));
+        A _PB2(i,j) += x _PB1(i) * impl::conj_if_needed(x _PB1(j));
       }
     }
   }

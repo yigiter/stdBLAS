@@ -43,7 +43,7 @@
 #ifndef LINALG_INCLUDE_EXPERIMENTAL___P1673_BITS_PACKED_LAYOUT_HPP_
 #define LINALG_INCLUDE_EXPERIMENTAL___P1673_BITS_PACKED_LAYOUT_HPP_
 
-#include <experimental/mdspan>
+//#include <experimental/mdspan>
 #include "layout_triangle.hpp"
 
 namespace std {

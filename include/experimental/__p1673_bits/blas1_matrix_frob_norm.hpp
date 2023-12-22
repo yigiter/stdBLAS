@@ -99,7 +99,7 @@ Scalar matrix_frob_norm(
     return result;
   }
   else if(A.extent(0) == size_type(1) && A.extent(1) == size_type(1)) {
-    result += abs(A(0, 0));
+    result += abs(A _PB2(0, 0));
     return result;
   }
 
@@ -108,7 +108,7 @@ Scalar matrix_frob_norm(
   Scalar ssq = 1.0;
   for (size_type i = 0; i < A.extent(0); ++i) {
     for (size_type j = 0; j < A.extent(1); ++j) {
-      const auto absaij = abs(A(i,j));
+      const auto absaij = abs(A _PB2(i,j));
       if (absaij != 0.0) {
         const auto quotient = scale / absaij;
         if (scale < absaij) {
@@ -187,7 +187,7 @@ namespace matrix_frob_norm_detail
       std::experimental::extents<SizeType, numRows, numCols>,
       Layout,
       Accessor
-    > A) -> decltype( abs(A(0,0)) * abs(A(0,0)) );
+    > A) -> decltype( abs(A _PB2(0,0)) * abs(A _PB2(0,0)) );
 
 } // namespace matrix_frob_norm_detail
 

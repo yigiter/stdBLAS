@@ -148,7 +148,7 @@ namespace vector_norm2_detail {
     class Accessor>
   auto vector_norm2_return_type_deducer(
     std::experimental::mdspan<ElementType, std::experimental::extents<SizeType, ext0>, Layout, Accessor> x)
-  -> decltype(abs(x(0)) * abs(x(0)));
+  -> decltype(abs(x _PB1(0)) * abs(x _PB1(0)));
 } // namespace vector_norm2_detail
 
 template<class ElementType,

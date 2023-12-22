@@ -101,7 +101,7 @@ Scalar dot(
 
   using size_type = std::common_type_t<SizeType1, SizeType2>;
   for (size_type k = 0; k < v1.extent(0); ++k) {
-    init += v1(k) * v2(k);
+    init += v1 _PB1(k) * v2 _PB1(k);
   }
   return init;
 }

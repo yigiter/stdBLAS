@@ -101,7 +101,7 @@ Scalar matrix_one_norm(
     return result;
   }
   else if(A.extent(0) == size_type(1) && A.extent(1) == size_type(1)) {
-    result += abs(A(0, 0));
+    result += abs(A _PB2(0, 0));
     return result;
   }
 
@@ -110,7 +110,7 @@ Scalar matrix_one_norm(
   for (size_type j = 0; j < A.extent(1); ++j) {
     auto col_sum = init;
     for (size_type i = 0; i < A.extent(0); ++i) {
-      col_sum += abs(A(i,j));
+      col_sum += abs(A _PB2(i,j));
     }
     result = max(col_sum, result);
   }

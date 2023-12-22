@@ -121,7 +121,7 @@ void symmetric_matrix_rank_2k_update(
     const size_type i_upper = lower_tri ? C.extent(0) : j+1;
     for (size_type i = i_lower; i < i_upper; ++i) {
       for (size_type k = 0; k < A.extent(1); ++k) {
-        C(i,j) += A(i,k)*B(j,k) + B(i,k)*A(j,k);
+        C _PB2(i,j) += A _PB2(i,k)*B _PB2(j,k) + B _PB2(i,k)*A _PB2(j,k);
       }
     }
   }
@@ -213,7 +213,7 @@ void hermitian_matrix_rank_2k_update(
     const size_type i_upper = lower_tri ? C.extent(0) : j+1;
     for (size_type i = i_lower; i < i_upper; ++i) {
       for (size_type k = 0; k < A.extent(1); ++k) {
-        C(i,j) += A(i,k) * impl::conj_if_needed(B(j,k)) + B(i,k) * impl::conj_if_needed(A(j,k));
+        C _PB2(i,j) += A _PB2(i,k) * impl::conj_if_needed(B _PB2(j,k)) + B _PB2(i,k) * impl::conj_if_needed(A _PB2(j,k));
       }
     }
   }

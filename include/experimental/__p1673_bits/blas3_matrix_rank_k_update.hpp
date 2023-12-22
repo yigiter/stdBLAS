@@ -149,7 +149,7 @@ void symmetric_matrix_rank_k_update(
     const size_type i_upper = lower_tri ? C.extent(0) : j+1;
     for (size_type i = i_lower; i < i_upper; ++i) {
       for (size_type k = 0; k < A.extent(1); ++k) {
-        C(i,j) += alpha*A(i,k)*A(j,k);
+        C _PB2(i,j) += alpha*A _PB2(i,k)*A _PB2(j,k);
       }
     }
   }
@@ -230,12 +230,13 @@ void symmetric_matrix_rank_k_update(
     const size_type i_upper = lower_tri ? C.extent(0) : j+1;
     for (size_type i = i_lower; i < i_upper; ++i) {
       for (size_type k = 0; k < A.extent(1); ++k) {
-        C(i,j) += A(i,k)*A(j,k);
+        C _PB2(i,j) += A _PB2(i,k)*A _PB2(j,k);
       }
     }
   }
 }
 
+/*
 template<class ExecutionPolicy,
          class ElementType_A,
          class SizeType_A, ::std::size_t numRows_A, ::std::size_t numCols_A,
@@ -263,6 +264,7 @@ void symmetric_matrix_rank_k_update(
     symmetric_matrix_rank_k_update(std::experimental::linalg::impl::inline_exec_t(), A, C, t);
   }
 }
+*/
 
 template<class ElementType_A,
          class SizeType_A, ::std::size_t numRows_A, ::std::size_t numCols_A,
@@ -309,7 +311,7 @@ void hermitian_matrix_rank_k_update(
     const size_type i_upper = lower_tri ? C.extent(0) : j+1;
     for (size_type i = i_lower; i < i_upper; ++i) {
       for (size_type k = 0; k < A.extent(1); ++k) {
-        C(i,j) += alpha * A(i,k) * impl::conj_if_needed(A(j,k));
+        C _PB2(i,j) += alpha * A _PB2(i,k) * impl::conj_if_needed(A _PB2(j,k));
       }
     }
   }
@@ -388,7 +390,7 @@ void hermitian_matrix_rank_k_update(
     const size_type i_upper = lower_tri ? C.extent(0) : j+1;
     for (size_type i = i_lower; i < i_upper; ++i) {
       for (size_type k = 0; k < A.extent(1); ++k) {
-        C(i,j) += A(i,k) * impl::conj_if_needed(A(j,k));
+        C _PB2(i,j) += A _PB2(i,k) * impl::conj_if_needed(A _PB2(j,k));
       }
     }
   }

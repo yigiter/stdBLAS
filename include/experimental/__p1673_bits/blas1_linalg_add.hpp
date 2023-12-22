@@ -82,7 +82,7 @@ void add_rank_1(
 
   using size_type = std::common_type_t<SizeType_x, SizeType_y, SizeType_z>;
   for (size_type i = 0; i < z.extent(0); ++i) {
-    z(i) = x(i) + y(i);
+    z _PB1(i) = x _PB1(i) + y _PB1(i);
   }
 }
 
@@ -132,7 +132,7 @@ void add_rank_2(
   using size_type = std::common_type_t<SizeType_x, SizeType_y, SizeType_z>;
   for (size_type j = 0; j < x.extent(1); ++j) {
     for (size_type i = 0; i < x.extent(0); ++i) {
-      z(i,j) = x(i,j) + y(i,j);
+      z _PB2(i,j) = x _PB2(i,j) + y _PB2(i,j);
     }
   }
 }

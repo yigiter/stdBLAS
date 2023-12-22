@@ -722,9 +722,9 @@ void matrix_product(
 
     for (size_type i = 0; i < C.extent(0); ++i) {
       for (size_type j = 0; j < C.extent(1); ++j) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (size_type k = 0; k < A.extent(1); ++k) {
-          C(i,j) += A(i,k) * B(k,j);
+          C _PB2(i,j) += A _PB2(i,k) * B _PB2(k,j);
         }
       }
     }
@@ -810,9 +810,9 @@ void matrix_product(
 
   for (size_type i = 0; i < C.extent(0); ++i) {
     for (size_type j = 0; j < C.extent(1); ++j) {
-      C(i,j) = E(i,j);
+      C _PB2(i,j) = E _PB2(i,j);
       for (size_type k = 0; k < A.extent(1); ++k) {
-        C(i,j) += A(i,k) * B(k,j);
+        C _PB2(i,j) += A _PB2(i,k) * B _PB2(k,j);
       }
     }
   }
@@ -909,13 +909,13 @@ void triangular_matrix_left_product(
   if constexpr (std::is_same_v<Triangle, lower_triangle_t>) {
     for (size_type j = 0; j < C.extent(1); ++j) {
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         const ptrdiff_t k_upper = explicitDiagonal ? i : i - ptrdiff_t(1);
         for (ptrdiff_t k = 0; k <= k_upper; ++k) {
-          C(i,j) += A(i,k) * B(k,j);
+          C _PB2(i,j) += A _PB2(i,k) * B _PB2(k,j);
         }
         if constexpr (! explicitDiagonal) {
-          C(i,j) += /* 1 times */ B(i,j);
+          C _PB2(i,j) += /* 1 times */ B _PB2(i,j);
         }
       }
     }
@@ -923,13 +923,13 @@ void triangular_matrix_left_product(
   else { // upper_triangle_t
     for (size_type j = 0; j < C.extent(1); ++j) {
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         const size_type k_lower = explicitDiagonal ? i : i + 1;
         for (size_type k = k_lower; k < C.extent(0); ++k) {
-          C(i,j) += A(i,k) * B(k,j);
+          C _PB2(i,j) += A _PB2(i,k) * B _PB2(k,j);
         }
         if constexpr (! explicitDiagonal) {
-          C(i,j) += /* 1 times */ B(i,j);
+          C _PB2(i,j) += /* 1 times */ B _PB2(i,j);
         }
       }
     }
@@ -1024,12 +1024,12 @@ void triangular_matrix_right_product(
     for (size_type j = 0; j < C.extent(1); ++j) {
       const size_type k_lower = explicitDiagonal ? j : j + 1;
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (size_type k = k_lower; k < C.extent(1); ++k) {
-          C(i,j) += B(i,k) * A(k,j);
+          C _PB2(i,j) += B _PB2(i,k) * A _PB2(k,j);
         }
         if constexpr (! explicitDiagonal) {
-          C(i,j) += /* 1 times */ B(i,j);
+          C _PB2(i,j) += /* 1 times */ B _PB2(i,j);
         }
       }
     }
@@ -1038,12 +1038,12 @@ void triangular_matrix_right_product(
     for (size_type j = 0; j < C.extent(1); ++j) {
       const ptrdiff_t k_upper = explicitDiagonal ? j : j - ptrdiff_t(1);
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (ptrdiff_t k = 0; k <= k_upper; ++k) {
-          C(i,j) += B(i,k) * A(k,j);
+          C _PB2(i,j) += B _PB2(i,k) * A _PB2(k,j);
         }
         if constexpr (! explicitDiagonal) {
-          C(i,j) += /* 1 times */ B(i,j);
+          C _PB2(i,j) += /* 1 times */ B _PB2(i,j);
         }
       }
     }
@@ -1135,10 +1135,10 @@ void triangular_matrix_left_product(
     for (size_type j=0; j < C.extent(1); ++j) {
       for (size_type k=0; k < C.extent(0); ++k) {
         for (size_type i=0; i < k; ++i) {
-          C(i,j) += A(i,k) * C(k,j);
+          C _PB2(i,j) += A _PB2(i,k) * C _PB2(k,j);
         }
         if constexpr (explicitDiagonal) {
-          C(k,j) = A(k,k) * C(k,j);
+          C _PB2(k,j) = A _PB2(k,k) * C _PB2(k,j);
         }
       }
     }
@@ -1147,10 +1147,10 @@ void triangular_matrix_left_product(
     for (size_type j=0; j < C.extent(1); ++j) {
       for (size_type k=C.extent(0); k > 0; --k) {
         for (size_type i=k; i < C.extent(0); i++) {
-          C(i,j) += A(i,k-1) * C(k-1,j);
+          C _PB2(i,j) += A _PB2(i,k-1) * C _PB2(k-1,j);
         }
         if constexpr (explicitDiagonal) {
-          C(k-1,j) = A(k-1,k-1) * C(k-1,j);
+          C _PB2(k-1,j) = A _PB2(k-1,k-1) * C _PB2(k-1,j);
         }
       }
     }
@@ -1229,12 +1229,12 @@ void triangular_matrix_right_product(
     for (size_type j=C.extent(1); j > 0; --j) {
       if constexpr (explicitDiagonal) {
         for(size_type i=0; i < C.extent(0); ++i) {
-          C(i,j-1) = C(i,j-1) * A(j-1,j-1);
+          C _PB2(i,j-1) = C _PB2(i,j-1) * A _PB2(j-1,j-1);
         }
       }
       for (size_type k=0; k < j-1; k++) {
         for(size_type i=0; i < C.extent(0); ++i) {
-          C(i,j-1) += C(i,k) * A(k,j-1);
+          C _PB2(i,j-1) += C _PB2(i,k) * A _PB2(k,j-1);
         }
       }
     }
@@ -1243,12 +1243,12 @@ void triangular_matrix_right_product(
     for (size_type j=0; j < C.extent(1); ++j) {
       if constexpr (explicitDiagonal) {
         for (size_type i=0; i < C.extent(0); ++i) {
-          C(i,j) = C(i,j) * A(j,j);
+          C _PB2(i,j) = C _PB2(i,j) * A _PB2(j,j);
         }
       }
       for (size_type k=j+1; k < C.extent(1); ++k) {
         for (size_type i=0; i < C.extent(0); i++) {
-          C(i,j) += C(i,k) * A(k,j);
+          C _PB2(i,j) += C _PB2(i,k) * A _PB2(k,j);
         }
       }
     }
@@ -1330,10 +1330,10 @@ void symmetric_matrix_left_product(
   if constexpr (std::is_same_v<Triangle, lower_triangle_t>) {
     for (size_type j = 0; j < C.extent(1); ++j) {
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (size_type k = 0; k < A.extent(1); ++k) {
-          ElementType_A aik = i <= k ? A(k,i) : A(i,k);
-          C(i,j) += aik * B(k,j);
+          ElementType_A aik = i <= k ? A _PB2(k,i) : A _PB2(i,k);
+          C _PB2(i,j) += aik * B _PB2(k,j);
         }
       }
     }
@@ -1341,10 +1341,10 @@ void symmetric_matrix_left_product(
   else { // upper_triangle_t
     for (size_type j = 0; j < C.extent(1); ++j) {
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (size_type k = 0; k < A.extent(1); ++k) {
-          ElementType_A aik = i >= k ? A(k,i) : A(i,k);
-          C(i,j) += aik * B(k,j);
+          ElementType_A aik = i >= k ? A _PB2(k,i) : A _PB2(i,k);
+          C _PB2(i,j) += aik * B _PB2(k,j);
         }
       }
     }
@@ -1432,10 +1432,10 @@ void symmetric_matrix_right_product(
   if constexpr (std::is_same_v<Triangle, lower_triangle_t>) {
     for (size_type j = 0; j < C.extent(1); ++j) {
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (size_type k = 0; k < A.extent(1); ++k) {
-          ElementType_A akj = j <= k ? A(k,j) : A(j,k);
-          C(i,j) += B(i,k) * akj;
+          ElementType_A akj = j <= k ? A _PB2(k,j) : A _PB2(j,k);
+          C _PB2(i,j) += B _PB2(i,k) * akj;
         }
       }
     }
@@ -1443,10 +1443,10 @@ void symmetric_matrix_right_product(
   else { // upper_triangle_t
     for (size_type j = 0; j < C.extent(1); ++j) {
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (size_type k = 0; k < A.extent(1); ++k) {
-          ElementType_A akj = j >= k ? A(k,j) : A(j,k);
-          C(i,j) += B(i,k) * akj;
+          ElementType_A akj = j >= k ? A _PB2(k,j) : A _PB2(j,k);
+          C _PB2(i,j) += B _PB2(i,k) * akj;
         }
       }
     }
@@ -1722,10 +1722,10 @@ void hermitian_matrix_left_product(
   if constexpr (std::is_same_v<Triangle, lower_triangle_t>) {
     for (size_type j = 0; j < C.extent(1); ++j) {
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (size_type k = 0; k < A.extent(1); ++k){
-          ElementType_A aik = i <= k ? impl::conj_if_needed(A(k,i)) : A(i,k);
-          C(i,j) += aik * B(k,j);
+          ElementType_A aik = i <= k ? impl::conj_if_needed(A _PB2(k,i)) : A _PB2(i,k);
+          C _PB2(i,j) += aik * B _PB2(k,j);
         }
       }
     }
@@ -1733,10 +1733,10 @@ void hermitian_matrix_left_product(
   else { // upper_triangle_t
     for (size_type j = 0; j < C.extent(1); ++j) {
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (size_type k = 0; k < A.extent(1); ++k) {
-          ElementType_A aik = i >= k ? impl::conj_if_needed(A(k,i)) : A(i,k);
-          C(i,j) += aik * B(k,j);
+          ElementType_A aik = i >= k ? impl::conj_if_needed(A _PB2(k,i)) : A _PB2(i,k);
+          C _PB2(i,j) += aik * B _PB2(k,j);
         }
       }
     }
@@ -1823,10 +1823,10 @@ void hermitian_matrix_right_product(
   if constexpr (std::is_same_v<Triangle, lower_triangle_t>) {
     for (size_type j = 0; j < C.extent(1); ++j) {
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (size_type k = 0; k < A.extent(1); ++k) {
-          ElementType_A akj = j <= k ? A(k,j) : impl::conj_if_needed(A(j,k));
-          C(i,j) += B(i,k) * akj;
+          ElementType_A akj = j <= k ? A _PB2(k,j) : impl::conj_if_needed(A _PB2(j,k));
+          C _PB2(i,j) += B _PB2(i,k) * akj;
         }
       }
     }
@@ -1834,10 +1834,10 @@ void hermitian_matrix_right_product(
   else { // upper_triangle_t
     for (size_type j = 0; j < C.extent(1); ++j) {
       for (size_type i = 0; i < C.extent(0); ++i) {
-        C(i,j) = ElementType_C{};
+        C _PB2(i,j) = ElementType_C{};
         for (size_type k = 0; k < A.extent(1); ++k) {
-          ElementType_A akj = j >= k ? A(k,j) : impl::conj_if_needed(A(j,k));
-          C(i,j) += B(i,k) * akj;
+          ElementType_A akj = j >= k ? A _PB2(k,j) : impl::conj_if_needed(A _PB2(j,k));
+          C _PB2(i,j) += B _PB2(i,k) * akj;
         }
       }
     }

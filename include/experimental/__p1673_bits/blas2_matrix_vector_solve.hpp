@@ -88,17 +88,17 @@ void trsv_upper_triangular_left_side(
     // TODO this would be a great opportunity for an implementer to
     // add value, by accumulating in extended precision (or at least
     // in a type with the max precision of X and B).
-    using sum_type = decltype (B(i) - A(0,0) * X(0));
+    using sum_type = decltype (B _PB1(i) - A _PB2(0,0) * X _PB1(0));
     //using sum_type = typename out_object_t::element_type;
-    sum_type t (B(i));
+    sum_type t (B _PB1(i));
     for (size_type j = i + 1; j < A_num_cols; ++j) {
-      t = t - A(i,j) * X(j);
+      t = t - A _PB2(i,j) * X _PB1(j);
     }
     if constexpr (explicit_diagonal) {
-      X(i) = divide(t, A(i,i));
+      X _PB1(i) = divide(t, A _PB2(i,i));
     }
     else {
-      X(i) = t;
+      X _PB1(i) = t;
     }
   }
 }
@@ -160,17 +160,17 @@ void trsv_lower_triangular_left_side(
     // TODO this would be a great opportunity for an implementer to
     // add value, by accumulating in extended precision (or at least
     // in a type with the max precision of X and B).
-    using sum_type = decltype (B(i) - A(0,0) * X(0));
+    using sum_type = decltype (B _PB1(i) - A _PB2(0,0) * X _PB1(0));
     //using sum_type = typename out_object_t::element_type;
-    sum_type t (B(i));
+    sum_type t (B _PB1(i));
     for (size_type j = 0; j < i; ++j) {
-      t = t - A(i,j) * X(j);
+      t = t - A _PB2(i,j) * X _PB1(j);
     }
     if constexpr (explicit_diagonal) {
-      X(i) = divide(t, A(i,i));
+      X _PB1(i) = divide(t, A _PB2(i,i));
     }
     else {
-      X(i) = t;
+      X _PB1(i) = t;
     }
   }
 }
